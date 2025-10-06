@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 浏览器标签上显示的网站标题 -->
+    <title>CPer的导航页</title>
+    <!-- 网站介绍 -->
+    <meta name="description" content="CPer的导航页">
+    <!-- 网站关键字 -->
+    <meta name="keywords" content="个人主页,程序员,CPer,510904,510904.xyz">
+    <!-- 浏览器标签上显示的图标 -->
+    <link rel="icon" type="image/ico" href="http://q1.qlogo.cn/g?b=qq&nk=3550810388&s=100">
+    <!-- 样式文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="./static/style.css?v=1.2.0">
+    <link rel="stylesheet" href="./static/APlayer-1.10.1/dist/APlayer.min.css">
+
+    <!-- 自定义设置 -->
+    <style>
+        body {
+            /*背景图片URL 可使用随机图片API */
+            background-image: url("https://t.alcy.cc/fj");
+        }
+
+        .photo-bg {
+            /* 卡片左侧图片 */
+            background-image: url("./static/images/3.png");
+        }
+
+        .kz-video {
+            /* 背景视频，none: 不显示 unset 显示 */
+            display: unset; 
+        }
+    </style>
+    <script>
+        // 音乐设置
+        let meting_music_api = "https://www.kezez.com/api/meting-api/";// meting api
+        let music_server = "netease"; // 音乐服务：网易云 netease 参见 meting api支持的服务
+        let music_type = "playlist"; // 歌曲类型：歌单 playlist 单首歌曲 song  专辑 album
+        let music_id = "14068943220"; // 歌单ID或歌曲ID或者专辑ID 20173709 29732992
+        let music_order = "random"; // 音频循环顺序, 顺序播放： 'list', 随机播放：'random'
+        let music_mini = false; // mini模式 吸底模式开启后此选项实效 true / false
+        let music_fixed = false; // 吸底模式
+        let music_volume = 0.7; // 默认音量
+        let music_autoplay = false; // 自动播放
+        let music_loop = "all"; // 音频循环播放, 可选值: 'all', 'one', 'none' ，分别为全部循环，单曲循环，不循环
+
+        // 一言设置
+        let hitokoto_api = "https://v1.hitokoto.cn"; // 一言API
+    </script>
+    <!-- end 自定义设置 -->
+</head>
+
+<body>
+    <div class="kz-video">
+        <video src="" autoplay="autoplay" loop muted playsinline="" webkit-playsinline=""></video>
+    </div>
+    <div id="main" class="container">
+        <div class="row my-card justify-content-center">
+            <div class="col-lg-4 photo-bg"></div>
+            <div class="col-lg-8 card">
+                <!-- 大标题 -->
+                <h1>CPer's HomePage</h1>
+                <!-- 标题下的一段话 -->
+                <p>
+                    很荣幸您能访问我的网站！ 目前我仍在学习中...
+                </p>
+                <p id="hitokoto_text">:D 一言获取中...</p>
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- 导航按钮组 -->
+                        <button data-href="https://alist.510904.xyz"
+                        data-title="Alist"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-primary col-lg-4">Alist
+                         </button>
+
+                        <button data-href="http://47.109.159.125:20727/admin"
+                        data-title="1Panle"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-success col-lg-4">1Panle
+                         </button>
+
+                        <button data-href="https://nas.510904.xyz"
+                        data-title="NAS"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-info col-lg-4">NAS
+                         </button>
+
+                        <button data-href="http://mc.510904.xyz"
+                        data-title="MC"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-primary col-lg-4">MC
+                         </button>
+
+                        <button data-href="http://pc.510904.xyz"
+                        data-title="PC"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-success col-lg-4">PC
+                         </button>
+
+
+                        <button data-href="https://dragon.510904.xyz"
+                        data-title="Dragon's NAS"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                        class="kz-nav-btn btn btn-info col-lg-4">Dragon's NAS
+                         </button>
+                         
+                         <button type="button"
+                         data-href="http://jk.510904.xyz"
+                         data-title="状态监控"
+                        data-window="newtab"
+                        data-anim="4"
+                        data-shade="false"
+                         class="kz-nav-btn btn btn-outline-warning btn-sm">状态监控面板
+                        </button>
+
+                        <!-- end 导航按钮组 -->
+                    </div>
+                </div>
+                <!-- aplayer inner -->
+                <div id="aplayer-inner" class="aplayer"></div>
+                <!-- end aplayer inner -->
+                <ul class="social mt-1">
+                    <li><a href="https://qm.qq.com/cgi-bin/qm/qr?k=_ZzZ0TDMddX-aq2DD-a5yeHq36UJK2Ke"><i class="fab fa-qq " aria-hidden="true"></i></a>
+                    </li>
+                    <li><a href="https://github.com/i5114514kf"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+                    <li><a href="https://t.me/lu1145"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
+                    <li><a href="https://space.bilibili.com/604160647"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                    <li><a href="https://u.wechat.com/MBf3uTcoE4H5SY7l_84shFw"><i class="fab fa-weixin"
+                                aria-hidden="true"></i></a></li>
+                </ul>
+
+                <footer>
+                    <p>Copyright 2025 - Now 
+                        <br>
+                        <a href="https://www.510904.xyz/" target="_blank">CPer</a>
+                        <a href="http://beian.miit.gov.cn/" target="_blank">蜀ICP备2025160729号-1</a>
+                    </p>
+                </footer>
+            </div>
+        </div>
+     <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.4/dist/autoload.js"></script>
+
+    </div>
+
+    <!-- aplayer -->
+    <div id="aplayer-fixed" class="aplayer"></div>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./static/APlayer-1.10.1/dist/APlayer.min.js"></script>
+    <script src="./static/Meting.min.js"></script>
+    <!-- end_aplayer -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script defer src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="./static/layer-v3.5.1/layer/layer.js"></script>
+
+    <script src="./static/main.js"></script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+!function (e, t, a) {
+function r() {
+for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+requestAnimationFrame(r)
+}
+function n() {
+var t = "function" == typeof e.onclick && e.onclick;
+e.onclick = function (e) {
+t && t(), o(e)
+}
+}
+function o(e) {
+var a = t.createElement("div");
+a.className = "heart", s.push({ el: a, x: e.clientX - 5, y: e.clientY - 5, scale: 1, alpha: 1, color: c() }), t.body.appendChild(a)
+}
+function i(e) {
+var a = t.createElement("style");
+a.type = "text/css";
+try {
+a.appendChild(t.createTextNode(e))
+} catch (t) {
+a.styleSheet.cssText = e
+}
+t.getElementsByTagName("head")[0].appendChild(a)
+}
+function c() {
+return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+}
+var s = [];
+e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+setTimeout(e, 1e3 / 60)
+}, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+}(window, document);
+</script>
+</body>
+
+</html>
