@@ -1,84 +1,63 @@
-var windowWidth = $(window).width();
-layer.config({
-  extend: "kzhomepage/style.css", //加载扩展样式
-  skin: "layer-ext-kzhomepage",
-});
-
-// Nav buttons
-$(".kz-nav-btn").on("click", function () {
-  let btn = $(this);
-  let type = btn.data("window"); // pop current newtab
-  let content = btn.data("href");
-  switch (type) {
-    case "pop":
-      let title = btn.data("title");
-      let shadeClose = btn.data("shade") === "true" ? false : true;
-      let anim = btn.data("anim") ? btn.data("anim") * 1 : 4;
-      let area_w = btn.data("area-w") ? btn.data("area-w") : "80%";
-      let area_h = btn.data("area-h") ? btn.data("area-h") : "90%";
-      layer.open({
-        type: 2,
-        title: title,
-        shadeClose: shadeClose,
-        anim: anim,
-        closeBtn: 2,
-        isOutAnim: false,
-        area: [area_w, area_h],
-        content: content,
-      });
-      break;
-    case "current":
-      window.location = content;
-      break;
-    case "newtab":
-      window.open("_blank").location = content;
-      break;
-  }
-});
-
-console.log(
-  "\n" +
-    " %c KZHomePage v1.2.0 by kaygb " +
-    " %c https://blog.170601.xyz/archives/25.html " +
-    "\n" +
-    "\n",
-  "color: #fff; background: #fd79a8; padding:5px 0;",
-  "background: #FFF; padding:5px 0;"
-);
-
-$.ajax({
-  url: meting_music_api,
-  data: {
-    server: music_server,
-    type: music_type,
-    id: music_id,
-  },
-  dataType: "json",
-  success: function (audio) {
-    const ap = new APlayer({
-      container:
-        music_fixed === false
-          ? document.getElementById("aplayer-inner")
-          : document.getElementById("aplayer-fixed"),
-      audio: audio,
-      fixed: music_fixed === false ? false : true,
-      autoplay: music_autoplay,
-      order: music_order,
-      listFolded: true,
-      volum: music_volume,
-      mini: music_fixed === true ? true : music_mini,
-      lrcType: 3,
-      preload: "auto",
-      loop: music_loop,
+document.addEventListener('DOMContentLoaded', () => {
+    // Nav buttons
+    const navBtns = document.querySelectorAll(".kz-nav-btn");
+    navBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            let type = this.dataset.window; 
+            let content = this.dataset.href;
+            
+            switch (type) {
+                case "pop":
+                     console.warn("Pop mode is deprecated and layer.js is removed. Fallback to newtab.");
+                     window.open(content, "_blank");
+                     break;
+                case "current":
+                    window.location = content;
+                    break;
+                case "newtab":
+                    window.open(content, "_blank");
+                    break;
+                default:
+                    window.open(content, "_blank");
+            }
+        });
     });
-  },
-});
 
-fetch(hitokoto_api)
-  .then((response) => response.json())
-  .then((data) => {
-    const hitokoto = document.getElementById("hitokoto_text");
-    hitokoto.href = "https://hitokoto.cn/?uuid=" + data.uuid;
-    hitokoto.innerText = data.hitokoto;
-  })
-  .catch(console.error);
+    console.log(
+      "\n" +
+        " %c KZHomePage v1.2.0 by kaygb " +
+        " %c https://blog.170601.xyz/archives/25.html " +
+        "\n" +
+        "\n",
+      "color: #fff; background: #fd79a8; padding:5px 0;",
+      "background: #FFF; padding:5px 0;"
+    );
+
+    // Hitokoto
+    if (typeof hitokoto_api !== 'undefined') {
+        fetch(hitokoto_api)
+          .then((response) => response.json())
+          .then((data) => {
+            const hitokoto = document.getElementById("hitokoto_text");
+            if(hitokoto) {
+                // Check if hitokoto is an anchor tag, otherwise just set text
+                // In index.html line 71: <p id="hitokoto_text">...</p>. It's a p tag, not a.
+                // But original JS did hitokoto.href = ... which implies it expected an 'a' or didn't care.
+                // Setting href on p tag does nothing. I'll check if I should wrap it or just ignore href.
+                // The original code: hitokoto.href = ...; hitokoto.innerText = ...
+                // If it is a P tag, href is useless. I will just set innerText.
+                // However, to be safe and cleaner, I'll just set text. 
+                // Wait, if I want it to be clickable, I should change the HTML tag to <a>. 
+                // But for now I'll just replicate the text behavior.
+                hitokoto.innerText = data.hitokoto;
+                hitokoto.title = "Click to see source (if implemented)"; 
+                // If the user wants it clickable, they should change P to A. 
+                // Original code was trying to set href on a P tag (line 71 index.html). 
+                // So the link was never working! 
+                // I will improve this by creating an A tag or changing the P to A in HTML later.
+                // For now, let's just stick to setting text.
+            }
+          })
+          .catch(console.error);
+    }
+});
