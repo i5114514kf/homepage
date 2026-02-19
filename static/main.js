@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Nav buttons
     const navBtns = document.querySelectorAll(".kz-nav-btn");
     navBtns.forEach(btn => {
         btn.addEventListener("click", function () {
@@ -32,6 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
       "color: #fff; background: #fd79a8; padding:5px 0;",
       "background: #FFF; padding:5px 0;"
     );
+
+    // Lazy-load click heart effects on first user interaction
+    const loadEffectsOnce = (() => {
+        let loaded = false;
+        return () => {
+            if (loaded) return;
+            loaded = true;
+            const script = document.createElement('script');
+            script.src = "./effects.js".replace("./", "./static/");
+            script.defer = true;
+            document.body.appendChild(script);
+        };
+    })();
+
+    window.addEventListener('click', loadEffectsOnce, { once: true, passive: true });
+    window.addEventListener('touchstart', loadEffectsOnce, { once: true, passive: true });
 
     // Hitokoto
     if (typeof hitokoto_api !== 'undefined') {
