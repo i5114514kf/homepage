@@ -92,7 +92,7 @@ footer p {
     margin-bottom: 0;
 }
 
-/* ===== 响应式 ===== */
+/* ===== 响应式（平板及以下） ===== */
 @media (max-width: 1199px) {
     h1 {
         font-size: 24px;
@@ -114,12 +114,151 @@ footer p {
     }
 }
 
+/* ===== 移动端（手机）：App 风格适配 ===== */
 @media (max-width: 767px) {
-    .card {
-        padding: 20px;
+    /* 干净浅色底，避免 iOS 上 fixed 背景图错位 */
+    html, body {
+        background-image: none !important;
+        background-color: #e8eef3;
+        background-attachment: scroll;
+        font-size: 16px;
     }
 
+    /* 左侧图片变为顶部通栏横幅，底部渐隐与主卡衔接 */
     .photo-bg {
-        height: 180px;
+        height: 168px;
+        min-height: 0;
+        margin: 16px 16px 0;
+        border-radius: 20px;
+        background-image:
+            linear-gradient(180deg, rgba(232, 238, 243, 0) 45%, rgba(232, 238, 243, .95) 100%),
+            url(./static/images/miku.webp) !important;
+        background-position: center, center;
+        background-size: cover, cover;
+        background-repeat: no-repeat;
+    }
+
+    /* 白色主卡悬浮在横幅下沿 */
+    .card {
+        margin: -42px 16px 0;
+        padding: 18px 16px 6px;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(30, 50, 70, .12);
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 4px;
+    }
+
+    .card > p:first-of-type {
+        font-size: 13px;
+        color: #7a8a95;
+        margin-bottom: 10px;
+    }
+
+    /* 一言：浅色圆角条 */
+    #hitokoto_text {
+        background: #f2f6f9;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: #4a5a66;
+    }
+
+    /* 服务按钮：两列圆角大卡片（触控区域 >= 44px） */
+    .container-fluid .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 14px 0 0;
+    }
+
+    .kz-nav-btn {
+        width: auto;
+        min-height: 74px;
+        margin: 0;
+        padding: 13px 14px;
+        border: 0 !important;
+        border-radius: 16px;
+        background: #eef4f8;
+        color: #26343e;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .kz-nav-btn::before {
+        content: attr(data-letter);
+        flex: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 34px;
+        text-align: center;
+    }
+
+    .kz-nav-btn::after {
+        content: attr(data-label);
+        font-size: 11px;
+        font-weight: 400;
+        color: #8a97a0;
+        margin-top: 2px;
+    }
+
+    /* 各服务图标底色 */
+    .kz-nav-btn[data-color="#3b82f6"]::before { background: #3b82f6; }
+    .kz-nav-btn[data-color="#10b981"]::before { background: #10b981; }
+    .kz-nav-btn[data-color="#22c3a6"]::before { background: #22c3a6; }
+    .kz-nav-btn[data-color="#6366f1"]::before { background: #6366f1; }
+    .kz-nav-btn[data-color="#8b5cf6"]::before { background: #8b5cf6; }
+    .kz-nav-btn[data-color="#0ea5e9"]::before { background: #0ea5e9; }
+    .kz-nav-btn[data-color="#f59e0b"]::before { background: #f59e0b; }
+
+    /* 社交：一行四个等宽按钮 */
+    .social {
+        display: flex;
+        gap: 10px;
+        margin: 16px 0 12px;
+    }
+
+    .social li {
+        float: none;
+        flex: 1;
+        margin: 0;
+    }
+
+    .social li a {
+        display: block;
+        text-align: center;
+        background: #eef4f8;
+        border-radius: 14px;
+        padding: 11px 0;
+    }
+
+    .social .fa-brands {
+        font-size: 20px;
+    }
+
+    /* 页脚 */
+    footer {
+        text-align: center;
+    }
+
+    footer p {
+        font-size: 11px;
+        color: #a8b4bd;
+        line-height: 1.7;
     }
 }
