@@ -14,12 +14,14 @@
     <!-- 自定义设置：改这里即可换背景、图片与一言 API -->
     <style>
         :root {
-            /* 背景图片 URL，可使用随机图片 API（PC 全屏背景 & 手机端背景层共用） */
+            /* 背景图片 URL，可使用随机图片 API（PC 全屏背景） */
             --bg-image: url("https://t.alcy.cc/fj");
+            /* 手机端全屏背景（毛玻璃内容卡，建议选干净点的图源） */
+            --bg-image-mobile: url("https://t.alcy.cc/ycy");
         }
 
         .photo-bg {
-            /* 卡片左侧图片（手机端横幅会优先使用上面的 --bg-image） */
+            /* 卡片左侧图片（仅 PC 端使用，手机端为毛玻璃布局已隐藏） */
             background-image: url("./static/images/miku.webp");
         }
         /* 如需视频背景：取消注释下一行，并在下方 .kz-video 处填写视频地址

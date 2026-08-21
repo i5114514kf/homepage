@@ -115,15 +115,19 @@ footer p {
     }
 }
 
-/* ===== 移动端（手机）：App 风格适配 ===== */
+/* ===== 移动端（手机）：全屏背景 + 毛玻璃内容卡 ===== */
 @media (max-width: 767px) {
-    /* 浅色底 + 固定定位背景层（iOS 上 background-attachment: fixed 有 bug，
-       改用 fixed 伪元素同样实现"背景不随内容滚动"） */
+    /* 固定定位背景层（iOS 上 background-attachment: fixed 有 bug，
+       改用 fixed 伪元素，同样实现"背景不随内容滚动"） */
     html, body {
         background-image: none !important;
-        background-color: #e8eef3;
+        background-color: #0f1a22;
         background-attachment: scroll;
         font-size: 16px;
+    }
+
+    body {
+        position: relative;
     }
 
     body::before {
@@ -131,61 +135,54 @@ footer p {
         position: fixed;
         inset: 0;
         z-index: -1;
-        background-image: var(--bg-image, none);
+        background-image: var(--bg-image-mobile, var(--bg-image, none));
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
 
-    body {
-        position: relative;
-    }
-
-    /* 左侧图片变为顶部通栏横幅（默认用 --bg-image，取消该变量则回退到 miku） */
+    /* 手机端不再使用左侧图片块 */
     .photo-bg {
-        height: 150px;
-        min-height: 0;
-        margin: 16px 16px 0;
-        border-radius: 20px;
-        box-shadow: 0 8px 24px rgba(30, 50, 70, .15);
-        background-image: var(--bg-image, url(./static/images/miku.webp)) !important;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
+        display: none;
     }
 
-    /* 白色主卡悬浮在横幅下沿 */
+    /* 内容整卡：半透明毛玻璃包裹 */
     .card {
-        margin: -42px 16px 0;
-        padding: 18px 16px 6px;
-        border-radius: 20px;
-        background: #fff;
-        box-shadow: 0 10px 30px rgba(30, 50, 70, .12);
-        position: relative;
-        z-index: 2;
+        margin: 0;
+        padding: 26px 18px 20px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, .32);
+        -webkit-backdrop-filter: blur(20px) saturate(1.5);
+        backdrop-filter: blur(20px) saturate(1.5);
+        border: 1px solid rgba(255, 255, 255, .4);
+        box-shadow: 0 12px 40px rgba(10, 25, 40, .28);
     }
 
     h1 {
-        font-size: 22px;
+        font-size: 24px;
         margin-bottom: 4px;
+        color: #fff;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
     }
 
     .card > p:first-of-type {
         font-size: 13px;
-        color: #7a8a95;
+        color: rgba(255, 255, 255, .85);
         margin-bottom: 10px;
     }
 
-    /* 一言：浅色圆角条 */
+    /* 一言：玻璃条 */
     #hitokoto_text {
-        background: #f2f6f9;
+        background: rgba(255, 255, 255, .35);
+        border: 1px solid rgba(255, 255, 255, .3);
         border-radius: 12px;
         padding: 10px 14px;
         font-size: 13px;
-        color: #4a5a66;
+        color: #fff;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .25);
     }
 
-    /* 服务按钮：两列圆角大卡片（触控区域 >= 44px） */
+    /* 服务按钮：两列毛玻璃卡片（触控区域 >= 44px） */
     .container-fluid .row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -198,10 +195,10 @@ footer p {
         min-height: 74px;
         margin: 0;
         padding: 13px 14px;
-        border: 0 !important;
+        border: 1px solid rgba(255, 255, 255, .45) !important;
         border-radius: 16px;
-        background: #eef4f8;
-        color: #26343e;
+        background: rgba(255, 255, 255, .28);
+        color: #fff;
         box-shadow: none;
         display: flex;
         flex-direction: column;
@@ -210,6 +207,7 @@ footer p {
         text-align: left;
         font-size: 16px;
         font-weight: 600;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .25);
     }
 
     .kz-nav-btn::before {
@@ -223,13 +221,14 @@ footer p {
         font-size: 15px;
         line-height: 34px;
         text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
     }
 
     .kz-nav-btn::after {
         content: attr(data-label);
         font-size: 11px;
         font-weight: 400;
-        color: #8a97a0;
+        color: rgba(255, 255, 255, .8);
         margin-top: 2px;
     }
 
@@ -242,7 +241,7 @@ footer p {
     .kz-nav-btn[data-color="#0ea5e9"]::before { background: #0ea5e9; }
     .kz-nav-btn[data-color="#f59e0b"]::before { background: #f59e0b; }
 
-    /* 社交：一行四个等宽按钮 */
+    /* 社交：一行四个等宽玻璃按钮 */
     .social {
         display: flex;
         gap: 10px;
@@ -258,9 +257,11 @@ footer p {
     .social li a {
         display: block;
         text-align: center;
-        background: #eef4f8;
+        background: rgba(255, 255, 255, .28);
+        border: 1px solid rgba(255, 255, 255, .4);
         border-radius: 14px;
         padding: 11px 0;
+        color: #fff;
     }
 
     .social .fa-brands {
@@ -272,9 +273,10 @@ footer p {
         text-align: center;
     }
 
-    footer p {
+    footer p,
+    footer a {
         font-size: 11px;
-        color: #a8b4bd;
+        color: rgba(255, 255, 255, .75);
         line-height: 1.7;
     }
 }

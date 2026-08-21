@@ -30,7 +30,18 @@
 
 ### 背景图
 
-修改 `<head>` 内联样式中 `body` 或 `.photo-bg` 的 `background-image`，可使用随机图 API。
+背景图地址统一收敛在 `index.html` 内联样式的 CSS 变量中，换图只改一处：
+
+```css
+:root {
+    --bg-image: url("https://t.alcy.cc/fj");         /* PC 全屏背景 */
+    --bg-image-mobile: url("https://t.alcy.cc/ycy"); /* 手机端全屏背景 */
+}
+```
+
+- PC 端还包含左侧卡片图 `.photo-bg`（默认 `static/images/miku.webp`）
+- 手机端为「全屏背景 + 毛玻璃内容卡」布局，按钮、一言、社交均为半透明玻璃样式；
+  若浏览器不支持 `backdrop-filter`（极少数老机型），会自动退化为半透明浅底，不影响使用
 
 ### 一言
 
