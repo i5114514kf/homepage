@@ -1,78 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navBtns = document.querySelectorAll(".kz-nav-btn");
-    navBtns.forEach(btn => {
-        btn.addEventListener("click", function () {
-            let type = this.dataset.window; 
-            let content = this.dataset.href;
-            
-            switch (type) {
-                case "pop":
-                     console.warn("Pop mode is deprecated and layer.js is removed. Fallback to newtab.");
-                     window.open(content, "_blank");
-                     break;
-                case "current":
-                    window.location = content;
-                    break;
-                case "newtab":
-                    window.open(content, "_blank");
-                    break;
-                default:
-                    window.open(content, "_blank");
+    // 导航按钮：data-window="current" 在当前页面打开，其余均在新标签页打开
+    document.querySelectorAll('.kz-nav-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const href = btn.dataset.href;
+            if (btn.dataset.window === 'current') {
+                location.href = href;
+            } else {
+                window.open(href, '_blank', 'noopener');
             }
         });
     });
 
-    console.log(
-      "\n" +
-        " %c KZHomePage v1.2.0 by kaygb " +
-        " %c https://blog.170601.xyz/archives/25.html " +
-        "\n" +
-        "\n",
-      "color: #fff; background: #fd79a8; padding:5px 0;",
-      "background: #FFF; padding:5px 0;"
-    );
+    // 首次交互（点击/触摸）时按需加载爱心特效，避免首屏多余请求
+    let effectsLoaded = false;
+    const loadEffects = () => {
+        if (effectsLoaded) return;
+        effectsLoaded = true;
+        const script = document.createElement('script');
+        script.src = './static/effects.js';
+        document.body.appendChild(script);
+    };
+    window.addEventListener('click', loadEffects, { once: true, passive: true });
+    window.addEventListener('touchstart', loadEffects, { once: true, passive: true });
 
-    // Lazy-load click heart effects on first user interaction
-    const loadEffectsOnce = (() => {
-        let loaded = false;
-        return () => {
-            if (loaded) return;
-            loaded = true;
-            const script = document.createElement('script');
-            script.src = "./effects.js".replace("./", "./static/");
-            script.defer = true;
-            document.body.appendChild(script);
-        };
-    })();
-
-    window.addEventListener('click', loadEffectsOnce, { once: true, passive: true });
-    window.addEventListener('touchstart', loadEffectsOnce, { once: true, passive: true });
-
-    // Hitokoto
+    // 一言：展示句子，并附带出处
     if (typeof hitokoto_api !== 'undefined') {
         fetch(hitokoto_api)
-          .then((response) => response.json())
-          .then((data) => {
-            const hitokoto = document.getElementById("hitokoto_text");
-            if(hitokoto) {
-                // Check if hitokoto is an anchor tag, otherwise just set text
-                // In index.html line 71: <p id="hitokoto_text">...</p>. It's a p tag, not a.
-                // But original JS did hitokoto.href = ... which implies it expected an 'a' or didn't care.
-                // Setting href on p tag does nothing. I'll check if I should wrap it or just ignore href.
-                // The original code: hitokoto.href = ...; hitokoto.innerText = ...
-                // If it is a P tag, href is useless. I will just set innerText.
-                // However, to be safe and cleaner, I'll just set text. 
-                // Wait, if I want it to be clickable, I should change the HTML tag to <a>. 
-                // But for now I'll just replicate the text behavior.
-                hitokoto.innerText = data.hitokoto;
-                hitokoto.title = "Click to see source (if implemented)"; 
-                // If the user wants it clickable, they should change P to A. 
-                // Original code was trying to set href on a P tag (line 71 index.html). 
-                // So the link was never working! 
-                // I will improve this by creating an A tag or changing the P to A in HTML later.
-                // For now, let's just stick to setting text.
-            }
-          })
-          .catch(console.error);
+            .then((res) => res.json())
+            .then((data) => {
+                const el = document.getElementById('hitokoto_text');
+                if (el && data.hitokoto) {
+                    el.textContent = data.from
+                        ? `${data.hitokoto} —— ${data.from}`
+                        : data.hitokoto;
+                }
+            })
+            .catch(() => {
+                const el = document.getElementById('hitokoto_text');
+                if (el) el.textContent = '一言加载失败，请稍后再试';
+            });
     }
 });
