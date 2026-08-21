@@ -5,6 +5,7 @@ html, body {
     font-size: 18px;
     color: #6c767d;
     background-color: #ebf1f5;
+    background-image: var(--bg-image, none);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -116,7 +117,8 @@ footer p {
 
 /* ===== 移动端（手机）：App 风格适配 ===== */
 @media (max-width: 767px) {
-    /* 干净浅色底，避免 iOS 上 fixed 背景图错位 */
+    /* 浅色底 + 固定定位背景层（iOS 上 background-attachment: fixed 有 bug，
+       改用 fixed 伪元素同样实现"背景不随内容滚动"） */
     html, body {
         background-image: none !important;
         background-color: #e8eef3;
@@ -124,17 +126,31 @@ footer p {
         font-size: 16px;
     }
 
-    /* 左侧图片变为顶部通栏横幅，底部渐隐与主卡衔接 */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: var(--bg-image, none);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    body {
+        position: relative;
+    }
+
+    /* 左侧图片变为顶部通栏横幅（默认用 --bg-image，取消该变量则回退到 miku） */
     .photo-bg {
-        height: 168px;
+        height: 150px;
         min-height: 0;
         margin: 16px 16px 0;
         border-radius: 20px;
-        background-image:
-            linear-gradient(180deg, rgba(232, 238, 243, 0) 45%, rgba(232, 238, 243, .95) 100%),
-            url(./static/images/miku.webp) !important;
-        background-position: center, center;
-        background-size: cover, cover;
+        box-shadow: 0 8px 24px rgba(30, 50, 70, .15);
+        background-image: var(--bg-image, url(./static/images/miku.webp)) !important;
+        background-position: center;
+        background-size: cover;
         background-repeat: no-repeat;
     }
 

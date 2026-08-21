@@ -13,13 +13,13 @@
 
     <!-- 自定义设置：改这里即可换背景、图片与一言 API -->
     <style>
-        body {
-            /* 背景图片 URL，可使用随机图片 API */
-            background-image: url("https://t.alcy.cc/fj");
+        :root {
+            /* 背景图片 URL，可使用随机图片 API（PC 全屏背景 & 手机端背景层共用） */
+            --bg-image: url("https://t.alcy.cc/fj");
         }
 
         .photo-bg {
-            /* 卡片左侧图片 */
+            /* 卡片左侧图片（手机端横幅会优先使用上面的 --bg-image） */
             background-image: url("./static/images/miku.webp");
         }
         /* 如需视频背景：取消注释下一行，并在下方 .kz-video 处填写视频地址
