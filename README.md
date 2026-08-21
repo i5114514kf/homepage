@@ -34,15 +34,12 @@
 
 ```css
 :root {
-    --bg-image: url("https://t.alcy.cc/fj"); /* PC 与手机端共用背景 */
-    /* 备用：如需手机端单独背景，取消注释并按需调整
-    --bg-image-mobile: url("https://t.alcy.cc/ycy");
-    */
+    --bg-image: url("https://t.alcy.cc/ycy"); /* PC 与手机端共用背景 */
 }
 ```
 
-- PC 端包含左侧卡片图 `.photo-bg`（默认 `static/images/miku.webp`），手机端缩小为顶部图块
-- 手机端不做独立适配，与 PC 端同一套样式，仅基础尺寸微调（顶部图块 180px、卡片内边距 20px）
+- PC 端包含左侧卡片图 `.photo-bg`（默认 `static/images/miku.webp`）
+- 手机端（≤767px）隐藏左侧图块，只保留白色内容卡，其余与 PC 端一致
 
 ### 一言
 

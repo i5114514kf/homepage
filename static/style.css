@@ -115,13 +115,13 @@ footer p {
     }
 }
 
-/* ===== 移动端（手机）：不单独适配，与 PC 端一致（仅基础尺寸调整） ===== */
+/* ===== 移动端（手机）：隐藏左侧图块，其余与 PC 端一致 ===== */
 @media (max-width: 767px) {
-    .card {
-        padding: 20px;
+    .photo-bg {
+        display: none;
     }
 
-    .photo-bg {
-        height: 180px;
+    .card {
+        padding: 20px;
     }
 }
