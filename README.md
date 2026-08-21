@@ -34,14 +34,15 @@
 
 ```css
 :root {
-    --bg-image: url("https://t.alcy.cc/fj");         /* PC 全屏背景 */
-    --bg-image-mobile: url("https://t.alcy.cc/ycy"); /* 手机端全屏背景 */
+    --bg-image: url("https://t.alcy.cc/fj"); /* PC 与手机端共用背景 */
+    /* 备用：如需手机端单独背景，取消注释并按需调整
+    --bg-image-mobile: url("https://t.alcy.cc/ycy");
+    */
 }
 ```
 
-- PC 端还包含左侧卡片图 `.photo-bg`（默认 `static/images/miku.webp`）
-- 手机端为「全屏背景 + 顶部 miku 横幅 + 悬浮白卡 + 两列大按钮」的 App 风格：
-  浅色底、深色文字、彩色图标块与 PC 端彩色按钮一一对应，触控区域 ≥ 74px；无需任何特殊效果支持
+- PC 端包含左侧卡片图 `.photo-bg`（默认 `static/images/miku.webp`），手机端缩小为顶部图块
+- 手机端不做独立适配，与 PC 端同一套样式，仅基础尺寸微调（顶部图块 180px、卡片内边距 20px）
 
 ### 一言
 
